@@ -91,5 +91,17 @@ const deleteDatabase = ():void =>{
     )
 }
 
+const getTargetCashiers1 = async() =>{
+    try{
+        const res = await pool.query(
+        'SELECT * FROM cashiers inner join shops ON cashiers.shop_id = shops.shop_id WHERE adress=($1)', ["Silpo"])
+        console.log(res.rows)
+        return res.rows;
+        }
+        catch(err){
+            console.log(err)
+        }
+}
 
-export {addCashier, createDataBase, getCashiers, addShop}
+
+export {addCashier, createDataBase, getCashiers, addShop, getTargetCashiers1}

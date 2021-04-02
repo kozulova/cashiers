@@ -1,11 +1,12 @@
 import express from 'express'
-import {addCashier, createDataBase, getCashiers, addShop} from './utils'
+import {addCashier, createDataBase, getCashiers, addShop, getTargetCashiers1} from './utils'
 import {Shop, Cashier} from './models'
 
 const app =  express()
 
 app.get('/', (req, res)=>{
-    res.send('Hello')
+    getTargetCashiers1().then(cashier=>res.send(cashier))
+    //res.send('Hello')
 })
 
 app.post('/addCashier', (req, res)=>{
