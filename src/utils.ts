@@ -94,7 +94,7 @@ const deleteDatabase = ():void =>{
 const getTargetCashiers1 = async() =>{
     try{
         const res = await pool.query(
-        'SELECT * FROM cashiers inner join shops ON cashiers.shop_id = shops.shop_id WHERE adress=($1)', ["Silpo"])
+        'SELECT * FROM cashiers inner join shops ON cashiers.shop_id = shops.shop_id WHERE adress=($1) AND yearsOfExpiriance>($2)', ["Silpo", 2])
         console.log(res.rows)
         return res.rows;
         }
