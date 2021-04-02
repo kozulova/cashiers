@@ -1,5 +1,6 @@
 import express from 'express'
-import {addCashier, createDataBase, getCashiers} from './utils'
+import {addCashier, createDataBase, getCashiers, addShop} from './utils'
+import {Shop, Cashier} from './models'
 
 const app =  express()
 
@@ -7,25 +8,31 @@ app.get('/', (req, res)=>{
     res.send('Hello')
 })
 
-app.get('/addCashier', (req, res)=>{
-    const name:String = 'Milly'
-    const age:Number = 25
-    const sex: Boolean = false
-    const yearsOfExpiriance: Number = 2
-    const worksInShifts: Boolean = false
-    addCashier(name, age, sex, yearsOfExpiriance, worksInShifts)
+app.post('/addCashier', (req, res)=>{
+    const cashierToAdd:Cashier = req.body || {
+        name: "Jacky",
+        age: 20,
+        sex: 1,
+        yearsOfExpiriance: 1,
+        shop: 2,
+    }
+    addCashier(cashierToAdd)
     res.send('Added')
 })
 
 app.get('/allCashiers', (req, res)=>{
-     getCashiers().then(cashiers=>res.send({cashiers}))
-
-    
+     getCashiers().then(cashiers=>res.send({cashiers})) 
 })
 
-app.get('/table', (req, res)=>{
+app.get('/createTable', (req, res)=>{
     createDataBase()
     res.send('Created')
 })
+
+app.post('/addShop', (req,res)=>{
+    const shopToAdd:Shop = {...req.body} || {name: "Silpo", address: "Kyivska"}
+    addShop(shopToAdd).then(addedShop=>res.send(`${addedShop}`))
+})
+
 
 app.listen(5000, ()=>console.log('Server running'))
